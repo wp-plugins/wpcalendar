@@ -17,7 +17,7 @@ Events will be displayed in chronological order.
 = Technical details =
 The plugin uses two connections to remotes servers: 
 * One is to googemap-api, which can be only uses remotely ( https://maps.googleapis.com/maps/api/js )
-* and the other one goes to map-tiles ( http://tiles.mapbox.com ), whcih also can be used remotely
+* and the other one goes to map-tiles ( http://tiles.mapbox.com ), which can be only used remotely
 
 
 == Installation ==
