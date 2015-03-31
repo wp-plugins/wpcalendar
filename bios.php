@@ -35,13 +35,13 @@ function post_type_termine() {
 			'menu_icon' => 'dashicons-calendar',
 			'rewrite' => array( 'slug' => 'termin'),
 			'show_ui' => true,
+			'taxonomies' => array('termine_types'),
 			'supports' => array(
 				'title',
 				'editor',
 				'excerpt',
 				'thumbnail',
-				'custom-fields',
-				'taxonomies' => array('termine_types'),
+				'custom-fields',				
 				'revisions')
 			)
 		);
