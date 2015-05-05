@@ -34,7 +34,7 @@ class termine_widget extends WP_Widget{
 <div id="termin_karte_map" style="width:235px; height:265px;margin:0"></div>
 <?php /* <h3 class="widget-title" style="position: relative;top: -260px;left:10px;padding-left:1em;width:120px;background:white;"><?=$title?></h3> */ ?>
 <script>
-
+<?php $lat = 48; $lon=11; $zoom = 11; ?>
 var map = L.map('termin_karte_map',{ zoomControl:false }).setView([<?=$lat?>, <?=$lon?>], <?=$zoom?>);
 mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
 L.tileLayer(
@@ -44,8 +44,8 @@ maxZoom: 18,
 }).addTo(map);
 
 var greenIcon = L.icon({
-    iconUrl: '<?= plugins_url(). '/termine/icon.png'?>',
-    shadowUrl: '<?= plugins_url(). '/termine/icon-shadow.png'?>',
+  iconUrl: ' <?= plugin_dir_url( __FILE__ ) . 'map/images/icon.png'?>',
+    shadowUrl: '<?= plugin_dir_url( __FILE__ ) . 'map/images/icon-shadow.png'?>',
 
     iconSize:     [21, 34], // size of the icon
     shadowSize:   [35, 34], // size of the shadow
@@ -55,8 +55,8 @@ var greenIcon = L.icon({
 });
 
 var blueIcon = L.icon({
-    iconUrl: '<?= plugins_url(). '/orte/icon.png'?>',
-    shadowUrl: '<?= plugins_url(). '/termine/icon-shadow.png'?>',
+    iconUrl: ' <?= plugin_dir_url( __FILE__ ) . 'map/images/icon.png'?>',
+    shadowUrl: '<?= plugin_dir_url( __FILE__ ) . 'map/images/icon-shadow.png'?>',
 
     iconSize:     [21, 34], // size of the icon
     shadowSize:   [35, 34], // size of the shadow
@@ -82,16 +82,8 @@ var blueIcon = L.icon({
 					)
 	);
 
-  $icalfile = 'ical.ics';
 
-  if ( time() - filemtime( $icalfile ) > (3600 * 4 ) ) $newical = true;
-  else $newical = false;
 
-  if( $newical ) $fp = fopen($icalfile,'w');
-    fwrite( $fp, "BEGIN:VCALENDAR\r
-VERSION:2.0\r
-PRODID:http://gruene-bayern.de\r
-METHOD:PUBLISH\r");
 
 
 	foreach ($termine AS $termin){
@@ -126,22 +118,11 @@ METHOD:PUBLISH\r");
 		<?php
 
 
-      if( $newical )  fwrite( $fp, "BEGIN:VEVENT\r
-LOCATION:$ort\r
-SUMMARY:$titelcal\r
-DESCRIPTION:$descriptioncal\r
-CLASS:PUBLIC\r
-DTSTART:$dtstart\r
-DTEND:$dtend\r
-END:VEVENT\r");
 
 	}
 
 
-  if( $newical ){
-    fwrite( $fp, "END:VCALENDAR\r");
-    fclose($fp);
-  }
+ 
 
   // Alle Beiträge
   $termine = get_posts(array('post_type'=>'post',         

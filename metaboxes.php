@@ -61,9 +61,9 @@ function setPin( lat, lng, zoom, address, city){
 </script>
 <?php
 echo ' <a href="' . plugin_dir_url( __FILE__ ) . '/map/?lat='.$wert6.'&lng='.$wert9.'&zoom='.$wert10.'" target="_blank" onclick="return popup(this.href);">Landkarte anzeigen</a>';
-?>
- | <a href="#" onClick="setPin(48.133906203913305,11.568281650543213,14,'Landesgeschäftsstelle, Sendlinger Str. 47', 'München')">LGS</a>
-<?php
+
+// | <a href="#" onClick="setPin(48.133906203913305,11.568281650543213,14,'Landesgeschäftsstelle, Sendlinger Str. 47', 'München')">LGS</a>
+
 
 	
 
