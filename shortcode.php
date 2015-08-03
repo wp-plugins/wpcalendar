@@ -47,8 +47,8 @@ function terminliste_func( $atts ) {
 
 
 
-
 add_shortcode( 'wpcalendar', 'wpcal_overview' );
+// code by ben
 function wpcal_overview( $atts ) {
 	$atts = shortcode_atts(
 		array(
@@ -65,7 +65,7 @@ function wpcal_overview( $atts ) {
 	}
 
 
-		query_posts(array('post_type'=>'termine',
+		$args = array('post_type'=>'termine',
 							'orderby' => 'meta_value',
 	        				'meta_key' => '_zeitstempel',
 	        			    'termine_type' => $atts['kat'],
@@ -77,24 +77,33 @@ function wpcal_overview( $atts ) {
 										'compare' => $compare
 									)
 							)
-						)
-		);
+						);
+						
+						
+				global $wp_query,$paged,$post;
+				$temp = $wp_query;
+				$wp_query= null;
+				$wp_query = new WP_Query();
+				$query .= 'post_type=termine';
+				
+				$wp_query->query($args);
+				ob_start();
+				?>			
 
-			while ( have_posts() ) : the_post();
-
-		
-			?>
+			<?php while ($wp_query->have_posts()) : $wp_query->the_post(); ?>
 			
 			<div class="wpcal-item" <?=$style?>>
 				<?php  if(function_exists('the_termin_short')) the_termin_short(); ?>
 				<h2><?php the_title(); ?></h2>
 				<?php the_excerpt();?>
-				<a href="<?php the_permalink();?>" class="weiterlesen">Termindetails »</a>
+				<a href="<?php the_permalink();?>" class="weiterlesen">Termindetails Â»</a>
 
 			</div>
 			<br style="clear:both"/>
-			<?php
-
-			endwhile;
+			<?php endwhile; ?>
+					<?php $wp_query = null; $wp_query = $temp;
+					$content = ob_get_contents();
+					ob_end_clean();
+					return $content;
 
 }
